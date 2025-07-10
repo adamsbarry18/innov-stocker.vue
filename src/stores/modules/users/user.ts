@@ -12,10 +12,10 @@ import { PendingInterceptor } from '@/libs/interceptors/PendingInterceptor';
 export const useUsersStore = defineStore('users', () => {
   // --- State ---
   const currentUser = ref<UserModel | null>(null);
-  const usersMap = ref<Map<number | string, UserModel>>(new Map()); // Stores fetched users by ID
-  const usersFetched = ref(false); // Flag to indicate if the initial list of users has been fetched
-  const isLoggingOut = ref(false); // Flag to prevent concurrent logout attempts
-  const authStatusChecked = ref(false); // Flag to indicate if initial authentication status has been checked
+  const usersMap = ref<Map<number | string, UserModel>>(new Map());
+  const usersFetched = ref(false);
+  const isLoggingOut = ref(false);
+  const authStatusChecked = ref(false);
 
   // --- Getters ---
   const isAuthenticated = computed(() => !!currentUser.value);
@@ -347,7 +347,8 @@ export const useUsersStore = defineStore('users', () => {
     }
     try {
       const response = await apiStore.api.get('/api/v1/users');
-      const fetchedUsers = response.data.data.map((u: any) => UserModel.fromAPI(u));
+      const usersData = response.data.data.users || response.data.data;
+      const fetchedUsers = usersData.map((u: any) => UserModel.fromAPI(u));
       fetchedUsers.forEach(_updateUserInMap);
       usersFetched.value = true;
     } catch (error) {

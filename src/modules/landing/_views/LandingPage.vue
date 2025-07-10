@@ -9,7 +9,7 @@
       <template #logo>
         <router-link to="/">
           <img src="@/assets/images/logo_stock_app.png" alt="logo" />
-          <span>StockMaster</span>
+          <span>Innov Stocker</span>
         </router-link>
       </template>
     </u-nav-bar>
@@ -199,7 +199,7 @@
     { id: 'features', label: 'Fonctionnalités', type: 'link', value: '#features' },
     { id: 'pricing', label: 'Tarifs', type: 'link', value: '#pricing' },
     { id: 'testimonials', label: 'Témoignages', type: 'link', value: '#testimonials' },
-    { id: 'contact', label: 'Contact', type: 'link', value: '#contact' },
+    { id: 'contact', label: 'Contact', type: 'link', value: '#demo' },
     {
       id: 'search',
       label: 'Rechercher',

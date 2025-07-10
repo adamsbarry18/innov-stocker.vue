@@ -1,7 +1,7 @@
 <template>
   <div class="user-signup-page-wrapper">
     <div class="signup-hero-banner">
-      <img src="@/assets/images/stock_app_hero.jpg" alt="StockMaster Signup" class="hero-image" />
+      <img src="@/assets/images/stock_app_hero.jpg" alt="Innov Stocker Signup" class="hero-image" />
     </div>
     <div class="signup-content-wrapper">
       <u-card class="signup-form-card">

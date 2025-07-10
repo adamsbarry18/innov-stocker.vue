@@ -3,7 +3,7 @@
     <div class="container">
       <div class="section-title">
         <span class="block">Prêt à transformer votre gestion d'entreprise?</span>
-        <span class="block">Commencez avec StockMaster aujourd'hui.</span>
+        <span class="block">Commencez avec Innov Stocker aujourd'hui.</span>
       </div>
       <p class="section-description">
         Essayez gratuitement pendant 14 jours. Aucune carte de crédit requise.

@@ -1,4 +1,4 @@
-# saas.template.vue
+# innov-stocker.vue
 
 Un template complet pour des applications frontend Vue 3, riche en composants, utilitaires et bonnes pratiques. Ce projet est conçu pour démarrer rapidement le développement d'interfaces utilisateur modernes et robustes.
 
@@ -36,7 +36,7 @@ Ces versions sont spécifiées dans la section `engines` du fichier [`package.js
 
     ```bash
     # Exemple avec git clone
-    git clone https://github.com/adamsbarry18/saas.template.vue.git
+    git clone https://github.com/adamsbarry18/innov-stocker.vue.git
     cd nom-du-projet
     ```
 
@@ -82,7 +82,7 @@ Voici une liste des principaux scripts disponibles dans [`package.json`](package
 Le projet est organisé comme suit (structure principale) :
 
 ```
-📦saas.template.vue
+📦innov-stocker.vue
  ┣ 📂.github/            # Workflows GitHub Actions (CI, Renovate)
  ┃ ┗ ...
  ┣ 📂.husky/             # Hooks Git configurés avec Husky
