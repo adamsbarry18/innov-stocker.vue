@@ -28,7 +28,8 @@ export default defineConfig(({ mode }) => {
       extensions: ['.js', '.json', '.vue', '.ts'],
     },
     build: {
-      sourcemap: isDevBuild ? true : 'hidden',
+      sourcemap: true, // Ajouté pour faciliter le debug sur Vercel
+      minify: false, // Désactive la minification pour identifier les erreurs de bundle
       outDir: 'dist',
       assetsDir: 'assets',
       rollupOptions: {

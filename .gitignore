@@ -114,3 +114,4 @@ Session.vim
 *.crt
 *.p12
 *.pfx
+.vercel
