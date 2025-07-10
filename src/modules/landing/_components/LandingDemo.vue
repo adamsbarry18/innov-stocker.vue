@@ -2,12 +2,12 @@
   <section class="demo-section">
     <div class="container">
       <div class="illustration">
-        <img src="@/assets/images/try_app_view.jpg" alt="Dashboard StockMaster" />
+        <img src="@/assets/images/try_app_view.jpg" alt="Dashboard Innov Stocker" />
       </div>
       <div class="content">
-        <h2 class="section-title">Essayez StockMaster gratuitement</h2>
+        <h2 class="section-title">Essayez Innov Stocker gratuitement</h2>
         <p class="section-description">
-          Découvrez comment StockMaster peut transformer votre gestion d'entreprise. Aucune carte de crédit
+          Découvrez comment Innov Stocker peut transformer votre gestion d'entreprise. Aucune carte de crédit
           requise.
         </p>
         <div class="demo-form">

@@ -8,7 +8,7 @@
         </div>
         <p class="subtitle">
           La solution tout-en-un pour optimiser vos achats, ventes, stocks et finances. Prenez le contrôle de
-          votre entreprise avec StockMaster.
+          votre entreprise avec Innov Stocker.
         </p>
         <div class="actions">
           <u-button type="primary" size="large" @click="redirectToLogin"> Essai gratuit </u-button>

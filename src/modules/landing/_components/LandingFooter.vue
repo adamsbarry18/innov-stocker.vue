@@ -6,7 +6,7 @@
         <div class="footer-section about-us">
           <div class="logo-container">
             <icon-base icon="icon-ware-house" :size="30" color="var(--color-primary-400)" />
-            <span class="logo-text">StockMaster</span>
+            <span class="logo-text">Innov Stocker</span>
           </div>
           <p class="description">
             La solution tout-en-un pour optimiser vos achats, ventes, stocks et finances.
@@ -60,14 +60,14 @@
             </li>
             <li class="contact-item">
               <icon-base icon="icon-email" :size="18" class="contact-icon" color="var(--color-primary-400)" />
-              <span>contact@stockmaster.com</span>
+              <span>contact@Innov Stocker.com</span>
             </li>
           </ul>
         </div>
       </div>
 
       <div class="footer-bottom">
-        <p class="copyright">© {{ currentYear }} StockMaster. Tous droits réservés.</p>
+        <p class="copyright">© {{ currentYear }} Innov Stocker. Tous droits réservés.</p>
         <div class="payment-icons">
           <!-- Placeholder images for payment icons -->
           <img src="https://via.placeholder.com/40x25/ffffff/000000?text=Visa" alt="Visa" />
