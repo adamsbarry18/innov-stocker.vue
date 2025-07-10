@@ -9,7 +9,6 @@ const proxyTarget = process.env.API_URL || 'http://localhost:8000';
 dns.setDefaultResultOrder('verbatim');
 
 export default defineConfig(({ mode }) => {
-  const isDevBuild = mode === 'development';
   return {
     plugins: [
       vue({
