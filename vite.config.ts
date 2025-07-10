@@ -9,6 +9,7 @@ const proxyTarget = process.env.API_URL || 'http://localhost:8000';
 dns.setDefaultResultOrder('verbatim');
 
 export default defineConfig(({ mode }) => {
+  const isDevBuild = mode === 'development';
   return {
     plugins: [
       vue({
@@ -27,8 +28,7 @@ export default defineConfig(({ mode }) => {
       extensions: ['.js', '.json', '.vue', '.ts'],
     },
     build: {
-      sourcemap: true, // Ajouté pour faciliter le debug sur Vercel
-      minify: false, // Désactive la minification pour identifier les erreurs de bundle
+      sourcemap: isDevBuild ? true : 'hidden',
       outDir: 'dist',
       assetsDir: 'assets',
       rollupOptions: {
