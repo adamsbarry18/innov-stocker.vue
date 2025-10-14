@@ -5,7 +5,7 @@
         <company-form :model-value="form" :loading="isLoading" @update:model-value="onUpdate" />
       </u-indexed-section>
       <template #menu-illustration>
-        <img class="picture" src="@/assets/images/svg/company.svg" alt="company" />
+        <img class="picture" src="@/assets/images/company.png" alt="company" />
       </template>
     </u-sections-with-menu>
 
