@@ -3,6 +3,20 @@ import { RouteRecordRaw } from 'vue-router';
 
 const administrationRoutes: RouteRecordRaw[] = [
   {
+    path: '/settings/company',
+    name: 'settings-company',
+    component: () => import('../modules/settings/_views/CompanySettings.vue'),
+    meta: {
+      breadcrumb: [
+        { label: 'settings.title', path: '/settings/company' },
+        { label: 'settings.company.title' },
+      ],
+      authorisation: {
+        level: SecurityLevel.ADMIN,
+      },
+    },
+  },
+  {
     path: '/account/settings',
     name: 'user-settings-edit',
     component: () => import('@/modules/users/_views/UserSettings.vue'),

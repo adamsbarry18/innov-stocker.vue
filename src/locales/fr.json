@@ -1,6 +1,7 @@
 {
   "settings.title": "Administration",
   "settings.users.title": "Utilisateurs",
+  "settings.company.title": "Entreprise",
   "groups-nav.store.title": "Store",
   "groups-nav.store.travel.title": "Travel",
   "groups-nav.product.title": "Product",
@@ -407,5 +408,15 @@
   "security.level.integrator": "Intégrateur",
   "security.level.admin": "Administrateur",
 
-  "commons.loading": "Chargement..."
+  "commons.loading": "Chargement...",
+  "company.form.phone": "Téléphone",
+  "company.form.website": "Site web",
+  "company.form.vat": "TVA",
+  "company.form.siret": "Siret",
+  "company.form.legalName": "Nom légal",
+  "company.form.address1": "Adresse ligne 1",
+  "company.form.address2": "Adresse ligne 2",
+  "company.form.city": "Ville",
+  "company.form.postalCode": "Code postal",
+  "company.form.country": "Pays"
 }

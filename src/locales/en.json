@@ -1,6 +1,7 @@
 {
   "settings.title": "Administration",
   "settings.users.title": "Users",
+  "settings.company.title": "Company",
   "groups-nav.store.title": "Store",
   "groups-nav.store.travel.title": "Travel",
   "groups-nav.product.title": "Product",
@@ -408,5 +409,15 @@
   "security.level.integrator": "Integrator",
   "security.level.admin": "Administrator",
 
-  "commons.loading": "Loading..."
+  "commons.loading": "Loading...",
+  "company.form.phone": "Phone",
+  "company.form.website": "Website",
+  "company.form.vat": "VAT",
+  "company.form.siret": "Siret",
+  "company.form.legalName": "Legal name",
+  "company.form.address1": "Address line 1",
+  "company.form.address2": "Address line 2",
+  "company.form.city": "City",
+  "company.form.postalCode": "Postal code",
+  "company.form.country": "Country"
 }
