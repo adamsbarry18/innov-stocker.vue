@@ -22,6 +22,8 @@
   "breadcrumb.my-account": "Mon compte",
   "breadcrumb.dashboard": "Tableau de bord",
   "breadcrumb.default-placeholder": "Indiquez un nom...",
+  "breadcrumb.settings.title": "Paramètres",
+  "breadcrumb.settings.company.title": "Entreprise",
   "commons.code-editor.search.by-word": "Mot entier",
   "commons.code-editor.search.find": "Chercher",
   "commons.code-editor.search.match-case": "Respecter la casse",

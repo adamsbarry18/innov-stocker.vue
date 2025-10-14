@@ -7,10 +7,7 @@ const administrationRoutes: RouteRecordRaw[] = [
     name: 'settings-company',
     component: () => import('../modules/settings/_views/CompanySettings.vue'),
     meta: {
-      breadcrumb: [
-        { label: 'settings.title', path: '/settings/company' },
-        { label: 'settings.company.title' },
-      ],
+      breadcrumb: [{ label: 'breadcrumb.settings.title' }, { label: 'breadcrumb.settings.company.title' }],
       authorisation: {
         level: SecurityLevel.ADMIN,
       },

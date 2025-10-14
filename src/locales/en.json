@@ -20,6 +20,8 @@
   "breadcrumb.my-account": "My account",
   "breadcrumb.dashboard": "Dashboard",
   "breadcrumb.default-placeholder": "Enter a name...",
+  "breadcrumb.settings.title": "Settings",
+  "breadcrumb.settings.company.title": "Company",
   "commons.autocomplete.no-result": "<No results>",
   "commons.before": "Before",
   "commons.code-editor.search.by-word": "By word",
