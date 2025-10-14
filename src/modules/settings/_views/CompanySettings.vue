@@ -37,7 +37,7 @@
   import { ref, computed, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
   import { UButton, UActionButtonBar, UIndexedSection, USectionsWithMenu } from '@/modules/ui';
-  import CompanyForm from './_components/CompanyForm.vue';
+  import CompanyForm from '../_components/CompanyForm.vue';
   import { useCompanyStore, CompanyModel } from '@/stores/modules/settings/company';
   import { useNotification } from '@/composables/notfication';
 
