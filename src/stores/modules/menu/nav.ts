@@ -112,6 +112,15 @@ export const useNavStore = defineStore('nav', () => {
     icon: 'settings',
     children: [
       {
+        name: 'company',
+        icon: 'settings',
+        state: 'settings-company',
+        activesStates: ['settings-company'],
+        authorisation: {
+          level: SecurityLevel.ADMIN,
+        },
+      },
+      {
         name: 'users',
         icon: 'users',
         state: 'users',

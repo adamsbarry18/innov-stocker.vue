@@ -1,6 +1,7 @@
 {
   "settings.title": "Administration",
   "settings.users.title": "Users",
+  "settings.company.title": "Company",
   "groups-nav.store.title": "Store",
   "groups-nav.store.travel.title": "Travel",
   "groups-nav.product.title": "Product",
@@ -19,6 +20,8 @@
   "breadcrumb.my-account": "My account",
   "breadcrumb.dashboard": "Dashboard",
   "breadcrumb.default-placeholder": "Enter a name...",
+  "breadcrumb.settings.title": "Settings",
+  "breadcrumb.settings.company.title": "Company",
   "commons.autocomplete.no-result": "<No results>",
   "commons.before": "Before",
   "commons.code-editor.search.by-word": "By word",
@@ -232,6 +235,17 @@
   "confirm.disable": "Confirm deactivation",
   "confirm.create": "Confirm creation",
   "confirm.duplicate": "Confirm duplication",
+  "commons.loading": "Loading...",
+  "company.form.phone": "Phone",
+  "company.form.website": "Website",
+  "company.form.vat": "VAT",
+  "company.form.siret": "Siret",
+  "company.form.legalName": "Legal name",
+  "company.form.address1": "Address line 1",
+  "company.form.address2": "Address line 2",
+  "company.form.city": "City",
+  "company.form.postalCode": "Postal code",
+  "company.form.country": "Country",
   "dashboard.error-count": "<b>{n}</b> error notification | <b>{n}</b> error notifications",
   "dashboard.welcome.title": "Hello there {name}",
   "dashboard.welcome.title-2": "welcome to your space!",
@@ -380,14 +394,12 @@
   "users.delete.modal.deleted": "Are you sure you want to delete this user? | Are you sure you want to delete these {count} users?",
   "notify.success": "Success",
   "users.fetch.error": "Error fetching users",
-
   "user.signup.title": "Create Account",
   "user.signup.button": "Sign Up",
   "user.signup.already-have-account": "Already have an account? Log in",
   "user.signup.success": "Account created successfully! You will be redirected.",
   "user.signup.error": "Error creating account.",
   "user.signup.google-signup": "Sign up with Google",
-
   "user.settings.authorizations.title": "Authorizations",
   "user.settings.authorizations.level": "Access Level",
   "user.settings.authorizations.internal": "Internal User ?",
@@ -401,12 +413,9 @@
   "user.settings.load.auth-error": "Error loading authorizations",
   "user.settings.loading": "Loading user data...",
   "user.settings.update.auth-error": "Error updating authorizations",
-
   "security.level.external": "External",
   "security.level.reader": "Reader",
   "security.level.user": "User",
   "security.level.integrator": "Integrator",
-  "security.level.admin": "Administrator",
-
-  "commons.loading": "Loading..."
+  "security.level.admin": "Administrator"
 }
