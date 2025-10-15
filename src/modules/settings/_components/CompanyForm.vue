@@ -1,25 +1,25 @@
 <template>
   <u-card>
     <div class="grid">
-      <u-form-input v-model="local.name" :label="$t('commons.form.name')" required />
-      <u-form-input v-model="local.legalName" :label="$t('company.form.legalName')" />
-      <u-form-input v-model="local.email" :label="$t('commons.form.email')" />
-      <u-form-input v-model="local.phone" :label="$t('company.form.phone')" />
-      <u-form-input v-model="local.website" :label="$t('company.form.website')" />
-      <u-form-input v-model="local.vatNumber" :label="$t('company.form.vat')" />
-      <u-form-input v-model="local.siret" :label="$t('company.form.siret')" />
+      <u-form-input v-model="local.name" :label="$t('commons.form.name')" required @input="handleUpdate" />
+      <u-form-input v-model="local.legalName" :label="$t('company.form.legalName')" @input="handleUpdate" />
+      <u-form-input v-model="local.email" :label="$t('commons.form.email')" @input="handleUpdate" />
+      <u-form-input v-model="local.phone" :label="$t('company.form.phone')" @input="handleUpdate" />
+      <u-form-input v-model="local.website" :label="$t('company.form.website')" @input="handleUpdate" />
+      <u-form-input v-model="local.vatNumber" :label="$t('company.form.vat')" @input="handleUpdate" />
+      <u-form-input v-model="local.siret" :label="$t('company.form.siret')" @input="handleUpdate" />
 
-      <u-form-input v-model="local.addressLine1" :label="$t('company.form.address1')" />
-      <u-form-input v-model="local.addressLine2" :label="$t('company.form.address2')" />
-      <u-form-input v-model="local.postalCode" :label="$t('company.form.postalCode')" />
-      <u-form-input v-model="local.city" :label="$t('company.form.city')" />
-      <u-form-input v-model="local.country" :label="$t('company.form.country')" />
+      <u-form-input v-model="local.addressLine1" :label="$t('company.form.address1')" @input="handleUpdate" />
+      <u-form-input v-model="local.addressLine2" :label="$t('company.form.address2')" @input="handleUpdate" />
+      <u-form-input v-model="local.postalCode" :label="$t('company.form.postalCode')" @input="handleUpdate" />
+      <u-form-input v-model="local.city" :label="$t('company.form.city')" @input="handleUpdate" />
+      <u-form-input v-model="local.country" :label="$t('company.form.country')" @input="handleUpdate" />
     </div>
   </u-card>
 </template>
 
 <script setup lang="ts">
-  import { watch, reactive } from 'vue';
+  import { watch, reactive, ref } from 'vue';
   import { UCard } from '@/modules/ui';
   import { UFormInput } from '@/modules/ui';
   import { CompanyModel } from '@/stores/modules/settings/company';
@@ -27,8 +27,9 @@
   const props = defineProps<{ modelValue: CompanyModel | null; loading?: boolean }>();
   const emit = defineEmits<{ (e: 'update:model-value', value: CompanyModel): void }>();
 
+  const isInternalUpdate = ref(false);
+
   const local = reactive<Partial<CompanyModel>>({
-    id: 1,
     name: '',
     legalName: null,
     email: null,
@@ -49,24 +50,25 @@
 
   watch(
     () => props.modelValue,
-    (v) => {
-      if (v) {
-        Object.assign(local, v);
+    (newValue) => {
+      if (newValue && !isInternalUpdate.value) {
+        Object.assign(local, newValue);
       }
     },
     { immediate: true }
   );
 
-  watch(
-    () => ({ ...local }),
-    (v) => {
-      if (props.modelValue) {
-        const updated = new CompanyModel({ ...props.modelValue, ...v });
-        emit('update:model-value', updated);
-      }
-    },
-    { deep: true }
-  );
+  function handleUpdate() {
+    if (props.modelValue) {
+      isInternalUpdate.value = true;
+      const updated = new CompanyModel({ ...props.modelValue, ...local });
+      emit('update:model-value', updated);
+
+      setTimeout(() => {
+        isInternalUpdate.value = false;
+      }, 0);
+    }
+  }
 </script>
 
 <style lang="scss">

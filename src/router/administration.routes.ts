@@ -7,7 +7,7 @@ const administrationRoutes: RouteRecordRaw[] = [
     name: 'settings-company',
     component: () => import('../modules/settings/_views/CompanySettings.vue'),
     meta: {
-      breadcrumb: [{ label: 'breadcrumb.settings.title' }, { label: 'breadcrumb.settings.company.title' }],
+      breadcrumb: [{ label: 'settings.title' }, { label: 'settings.company.title' }],
       authorisation: {
         level: SecurityLevel.ADMIN,
       },
@@ -36,6 +36,7 @@ const administrationRoutes: RouteRecordRaw[] = [
     component: () => import('@/modules/users/_views/UserSettings.vue'),
     props: (route) => ({ mode: 'admin-edit', id: Number(route.params.id) }),
     meta: {
+      breadcrumb: [{ label: 'admin.users', path: '/users' }, { label: 'admin.new-user' }],
       authorisation: {
         level: SecurityLevel.ADMIN,
       },
@@ -47,6 +48,7 @@ const administrationRoutes: RouteRecordRaw[] = [
     component: () => import('@/modules/users/_views/UserSettings.vue'),
     props: { mode: 'creation' },
     meta: {
+      breadcrumb: [{ label: 'admin.users', path: '/users' }, { label: 'admin.new-user' }],
       authorisation: {
         level: SecurityLevel.ADMIN,
       },

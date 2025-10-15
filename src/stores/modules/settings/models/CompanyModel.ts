@@ -98,12 +98,18 @@ export default class CompanyModel {
       if (Object.prototype.hasOwnProperty.call(this, key)) {
         const typedKey = key as keyof CompanyModel;
         if (!clearFields.includes(typedKey)) {
-          (apiData as any)[typedKey] = this[typedKey];
+          const value = this[typedKey];
+          if (value !== '' || typedKey === 'name') {
+            (apiData as any)[typedKey] = value;
+          }
         }
       }
     }
+    if (!apiData.name && this.name) {
+      apiData.name = this.name;
+    }
 
-    if (this.id === 0 || this.id === null) {
+    if (this.id === 0 || this.id === null || this.id === undefined) {
       delete apiData.id;
     }
 
