@@ -212,7 +212,10 @@ describe('stores/modules/auth/authorisations', () => {
     };
     const mockLevelsData = {
       [SecurityLevel.USER]: { featureA: ['read'] },
-      [SecurityLevel.ADMIN]: { featureA: ['read', 'write', 'delete'], featureB: ['read', 'execute'] },
+      [SecurityLevel.ADMIN]: {
+        featureA: ['read', 'write', 'delete'],
+        featureB: ['read', 'execute'],
+      },
     };
 
     describe('fetchAllFeatures', () => {
@@ -295,7 +298,9 @@ describe('stores/modules/auth/authorisations', () => {
       it('should call API to update user authorization', async () => {
         mockApiPut.mockResolvedValueOnce({ data: {} });
         await authorisationsStore.updateUserAuthorization(userId, payload);
-        expect(mockApiPut).toHaveBeenCalledWith(`/api/v1/authorization/users/${userId}`, { data: payload });
+        expect(mockApiPut).toHaveBeenCalledWith(`/api/v1/authorization/users/${userId}`, {
+          data: payload,
+        });
       });
 
       it('should throw error if no userId is provided', async () => {

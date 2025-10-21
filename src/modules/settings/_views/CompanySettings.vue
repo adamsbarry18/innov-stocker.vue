@@ -2,7 +2,7 @@
   <div class="company-settings">
     <u-sections-with-menu>
       <u-indexed-section :menu-title="$t('settings.company.title')">
-        <company-form :model-value="form" @update:model-value="onUpdate" />
+        <company-form :model-value="form" :loading="isLoading" @update:model-value="onUpdate" />
       </u-indexed-section>
       <template #menu-illustration>
         <img class="picture" src="@/assets/images/company.png" alt="company" />
@@ -36,24 +36,28 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted } from 'vue';
+  import { ref, computed, onMounted, watch } from 'vue';
   import { useRouter } from 'vue-router';
   import { UButton, UActionButtonBar, UIndexedSection, USectionsWithMenu } from '@/modules/ui';
   import CompanyForm from '../_components/CompanyForm.vue';
   import { useCompanyStore, CompanyModel } from '@/stores/modules/settings/company';
+  import { useNavStore } from '@/stores/modules/menu/nav';
   import { useNotification } from '@/composables/notfication';
 
   const router = useRouter();
   const { $successMsg, $errorMsg } = useNotification();
   const companyStore = useCompanyStore();
+  const navStore = useNavStore();
 
   const form = ref<CompanyModel | null>(null);
   const original = ref<CompanyModel | null>(null);
+  const isLoading = ref(false);
 
   const canSave = computed(() => {
     if (!form.value) return false;
 
-    const requiredFields = ['name'] as const;
+    // Vérifier les champs requis
+    const requiredFields = ['name', 'email', 'timezone'] as const;
     const hasRequiredFields = requiredFields.every((field) => {
       const value = form.value?.[field];
       return value && value.trim() !== '';
@@ -61,9 +65,29 @@
 
     if (!hasRequiredFields) return false;
 
+    // Vérifier le format email
     if (form.value.email && form.value.email.trim()) {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(form.value.email)) return false;
+    }
+
+    // Vérifier les valeurs numériques
+    if (form.value.defaultVatRatePercentage !== null && form.value.defaultVatRatePercentage !== undefined) {
+      if (form.value.defaultVatRatePercentage < 0 || form.value.defaultVatRatePercentage > 100) {
+        return false;
+      }
+    }
+
+    if (form.value.fiscalYearStartMonth !== null && form.value.fiscalYearStartMonth !== undefined) {
+      if (form.value.fiscalYearStartMonth < 1 || form.value.fiscalYearStartMonth > 12) {
+        return false;
+      }
+    }
+
+    if (form.value.fiscalYearStartDay !== null && form.value.fiscalYearStartDay !== undefined) {
+      if (form.value.fiscalYearStartDay < 1 || form.value.fiscalYearStartDay > 31) {
+        return false;
+      }
     }
 
     if (!original.value) return true;
@@ -74,17 +98,18 @@
 
       return (
         formAPI.name !== originalAPI.name ||
+        formAPI.tradingName !== originalAPI.tradingName ||
         formAPI.email !== originalAPI.email ||
-        formAPI.phone !== originalAPI.phone ||
+        formAPI.phoneNumber !== originalAPI.phoneNumber ||
         formAPI.website !== originalAPI.website ||
-        formAPI.legalName !== originalAPI.legalName ||
         formAPI.vatNumber !== originalAPI.vatNumber ||
-        formAPI.siret !== originalAPI.siret ||
-        formAPI.addressLine1 !== originalAPI.addressLine1 ||
-        formAPI.addressLine2 !== originalAPI.addressLine2 ||
-        formAPI.city !== originalAPI.city ||
-        formAPI.postalCode !== originalAPI.postalCode ||
-        formAPI.country !== originalAPI.country
+        formAPI.siretNumber !== originalAPI.siretNumber ||
+        formAPI.registrationNumber !== originalAPI.registrationNumber ||
+        formAPI.logoUrl !== originalAPI.logoUrl ||
+        formAPI.timezone !== originalAPI.timezone ||
+        formAPI.defaultVatRatePercentage !== originalAPI.defaultVatRatePercentage ||
+        formAPI.fiscalYearStartMonth !== originalAPI.fiscalYearStartMonth ||
+        formAPI.fiscalYearStartDay !== originalAPI.fiscalYearStartDay
       );
     } catch (error) {
       console.error('Error in canSave comparison:', error);
@@ -92,14 +117,18 @@
     }
   });
 
-  // Accepter directement la valeur mise à jour
   function onUpdate(value: CompanyModel) {
-    form.value = value;
+    if (!isLoading.value && value) {
+      form.value = value;
+    }
   }
 
   async function load() {
+    if (isLoading.value) return;
+
+    isLoading.value = true;
     try {
-      const data = await companyStore.fetchCompany(1);
+      const data = await companyStore.ensureCompanyFetched(1);
 
       if (data) {
         form.value = data.clone();
@@ -111,6 +140,8 @@
     } catch (error) {
       console.error('Error loading company:', error);
       $errorMsg('Failed to load company');
+    } finally {
+      isLoading.value = false;
     }
   }
 
@@ -132,7 +163,9 @@
     router.back();
   }
 
-  onMounted(load);
+  onMounted(() => {
+    load();
+  });
 </script>
 
 <style lang="scss">

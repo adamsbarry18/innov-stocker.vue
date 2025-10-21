@@ -145,7 +145,10 @@ export const useAuthorisationsStore = defineStore('authorisations', () => {
       });
     } catch (error) {
       if ((error as any).response?.status === 403) return null;
-      throw new ServerError('authorisations', 'updateUserAuthorization', error, { userId, payload });
+      throw new ServerError('authorisations', 'updateUserAuthorization', error, {
+        userId,
+        payload,
+      });
     }
   }
 
