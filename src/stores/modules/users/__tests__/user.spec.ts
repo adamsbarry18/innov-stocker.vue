@@ -189,7 +189,9 @@ describe('stores/modules/users/user', () => {
 
         await usersStore.logout();
 
-        expect(mockApiPost).toHaveBeenCalledWith('/api/v1/auth/logout', { skipAuthErrorInterceptor: true });
+        expect(mockApiPost).toHaveBeenCalledWith('/api/v1/auth/logout', {
+          skipAuthErrorInterceptor: true,
+        });
         expect(usersStore.currentUser).toBeNull();
         expect(storageService.removeAuthToken).toHaveBeenCalledTimes(1);
       });
@@ -294,7 +296,9 @@ describe('stores/modules/users/user', () => {
           firstName: updatedFirstName,
         };
         const result = await usersStore.updateUser(userUpdatePayload as any); // Cast as any if needed
-        expect(mockApiPut).toHaveBeenCalledWith(`/api/v1/users/${rawUser1.id}`, { data: expectedApiData });
+        expect(mockApiPut).toHaveBeenCalledWith(`/api/v1/users/${rawUser1.id}`, {
+          data: expectedApiData,
+        });
         expect(result.firstName).toBe(updatedFirstName);
       });
     });
