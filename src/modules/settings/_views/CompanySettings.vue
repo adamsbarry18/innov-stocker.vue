@@ -36,18 +36,16 @@
 </template>
 
 <script setup lang="ts">
-  import { ref, computed, onMounted, watch } from 'vue';
+  import { ref, computed, onMounted } from 'vue';
   import { useRouter } from 'vue-router';
   import { UButton, UActionButtonBar, UIndexedSection, USectionsWithMenu } from '@/modules/ui';
   import CompanyForm from '../_components/CompanyForm.vue';
   import { useCompanyStore, CompanyModel } from '@/stores/modules/settings/company';
-  import { useNavStore } from '@/stores/modules/menu/nav';
   import { useNotification } from '@/composables/notfication';
 
   const router = useRouter();
   const { $successMsg, $errorMsg } = useNotification();
   const companyStore = useCompanyStore();
-  const navStore = useNavStore();
 
   const form = ref<CompanyModel | null>(null);
   const original = ref<CompanyModel | null>(null);

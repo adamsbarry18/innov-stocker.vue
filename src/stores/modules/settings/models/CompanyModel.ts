@@ -71,8 +71,10 @@ export default class CompanyModel {
       logoUrl: company.logoUrl ?? null,
       defaultCurrencyId: company.defaultCurrency?.id ?? company.defaultCurrencyId ?? 0,
       defaultCurrency: company.defaultCurrency ?? null,
-      defaultVatRatePercentage: company.defaultVatRatePercentage !== null ? Number(company.defaultVatRatePercentage) : null,
-      fiscalYearStartMonth: company.fiscalYearStartMonth !== null ? Number(company.fiscalYearStartMonth) : null,
+      defaultVatRatePercentage:
+        company.defaultVatRatePercentage !== null ? Number(company.defaultVatRatePercentage) : null,
+      fiscalYearStartMonth:
+        company.fiscalYearStartMonth !== null ? Number(company.fiscalYearStartMonth) : null,
       fiscalYearStartDay: company.fiscalYearStartDay !== null ? Number(company.fiscalYearStartDay) : null,
       timezone: company.timezone ?? 'Europe/Paris',
       termsAndConditionsDefaultPurchase: company.termsAndConditionsDefaultPurchase ?? null,
@@ -108,7 +110,8 @@ export default class CompanyModel {
       logoUrl: this.logoUrl,
       addressId: this.addressId,
       defaultCurrencyId: this.defaultCurrencyId,
-      defaultVatRatePercentage: this.defaultVatRatePercentage !== null ? Number(this.defaultVatRatePercentage) : null,
+      defaultVatRatePercentage:
+        this.defaultVatRatePercentage !== null ? Number(this.defaultVatRatePercentage) : null,
       fiscalYearStartMonth: this.fiscalYearStartMonth !== null ? Number(this.fiscalYearStartMonth) : null,
       fiscalYearStartDay: this.fiscalYearStartDay !== null ? Number(this.fiscalYearStartDay) : null,
       timezone: this.timezone,

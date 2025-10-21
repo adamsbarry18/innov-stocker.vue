@@ -130,7 +130,8 @@
       if (v) {
         Object.assign(local, {
           ...v,
-          defaultVatRatePercentage: v.defaultVatRatePercentage !== null ? Number(v.defaultVatRatePercentage) : null,
+          defaultVatRatePercentage:
+            v.defaultVatRatePercentage !== null ? Number(v.defaultVatRatePercentage) : null,
           fiscalYearStartMonth: v.fiscalYearStartMonth !== null ? Number(v.fiscalYearStartMonth) : null,
           fiscalYearStartDay: v.fiscalYearStartDay !== null ? Number(v.fiscalYearStartDay) : null,
         });
@@ -155,9 +156,18 @@
           const updated = new CompanyModel({
             ...props.modelValue,
             ...v,
-            defaultVatRatePercentage: v.defaultVatRatePercentage !== null && v.defaultVatRatePercentage !== undefined ? Number(v.defaultVatRatePercentage) : null,
-            fiscalYearStartMonth: v.fiscalYearStartMonth !== null && v.fiscalYearStartMonth !== undefined ? Number(v.fiscalYearStartMonth) : null,
-            fiscalYearStartDay: v.fiscalYearStartDay !== null && v.fiscalYearStartDay !== undefined ? Number(v.fiscalYearStartDay) : null,
+            defaultVatRatePercentage:
+              v.defaultVatRatePercentage !== null && v.defaultVatRatePercentage !== undefined
+                ? Number(v.defaultVatRatePercentage)
+                : null,
+            fiscalYearStartMonth:
+              v.fiscalYearStartMonth !== null && v.fiscalYearStartMonth !== undefined
+                ? Number(v.fiscalYearStartMonth)
+                : null,
+            fiscalYearStartDay:
+              v.fiscalYearStartDay !== null && v.fiscalYearStartDay !== undefined
+                ? Number(v.fiscalYearStartDay)
+                : null,
           });
           emit('update:model-value', updated);
         }
