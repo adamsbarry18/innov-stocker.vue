@@ -12,6 +12,7 @@ export const useCompanyStore = defineStore('company', () => {
 
   const company = ref<CompanyModel | null>(null);
   const isLoading = ref(false);
+  const companyFetched = ref(false);
 
   const hasCompany = computed(() => !!company.value);
 
@@ -22,6 +23,7 @@ export const useCompanyStore = defineStore('company', () => {
       const data = response.data?.data || response.data;
       const normalized = CompanyModel.fromAPI(data);
       company.value = normalized;
+      companyFetched.value = true;
       return normalized;
     } catch (error) {
       throw new ServerError('company', 'fetchCompany', error, { id });
@@ -30,11 +32,27 @@ export const useCompanyStore = defineStore('company', () => {
     }
   }
 
+  async function ensureCompanyFetched(id: number = 1): Promise<CompanyModel | null> {
+    if (!companyFetched.value) {
+      return await fetchCompany(id);
+    }
+    return company.value;
+  }
+
+  async function forceReload(id: number = 1): Promise<CompanyModel | null> {
+    // Force reload by clearing current data first
+    company.value = null;
+    companyFetched.value = false;
+    return await fetchCompany(id);
+  }
+
   async function updateCompany(companyData: CompanyModel): Promise<CompanyModel> {
     isLoading.value = true;
     try {
       const dataToSend = companyData.toAPI();
-      const response = await apiStore.api.put(`/api/v1/company/${companyData.id}`, { data: dataToSend });
+      const response = await apiStore.api.put(`/api/v1/company/${companyData.id}`, {
+        data: dataToSend,
+      });
       const updated = response.data?.data || response.data;
       const normalized = CompanyModel.fromAPI(updated);
       company.value = normalized;
@@ -46,5 +64,5 @@ export const useCompanyStore = defineStore('company', () => {
     }
   }
 
-  return { company, isLoading, hasCompany, fetchCompany, updateCompany };
+  return { company, isLoading, hasCompany, fetchCompany, ensureCompanyFetched, forceReload, updateCompany };
 });

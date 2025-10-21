@@ -23,7 +23,11 @@ export const TopBar = () => ({
         type: 'search',
         align: 'right',
         action: 'search',
-        props: { placeholder: 'Rechercher...', modelValue: searchQuery.value, overflowSideShow: true },
+        props: {
+          placeholder: 'Rechercher...',
+          modelValue: searchQuery.value,
+          overflowSideShow: true,
+        },
       },
       {
         id: 'cart',
@@ -95,7 +99,13 @@ export const SideBar = () => ({
   components: { UNavBar },
   setup() {
     const sideBarItems = computed<NavItem[]>(() => [
-      { id: 'dashboard', label: 'Dashboard', type: 'link', icon: 'icon-dashboard', value: '/dashboard' },
+      {
+        id: 'dashboard',
+        label: 'Dashboard',
+        type: 'link',
+        icon: 'icon-dashboard',
+        value: '/dashboard',
+      },
       { id: 'products', label: 'Produits', type: 'link', icon: 'icon-product', value: '/products' },
       {
         id: 'orders',
@@ -108,7 +118,13 @@ export const SideBar = () => ({
         ],
       },
       { id: 'customers', label: 'Clients', type: 'link', icon: 'icon-user', value: '/customers' },
-      { id: 'settings', label: 'Paramètres', type: 'link', icon: 'icon-settings', value: '/settings' },
+      {
+        id: 'settings',
+        label: 'Paramètres',
+        type: 'link',
+        icon: 'icon-settings',
+        value: '/settings',
+      },
       {
         id: 'logout',
         label: 'Déconnexion',
@@ -167,7 +183,11 @@ export const TopBarWithCustomLogo = () => ({
         type: 'search',
         align: 'right',
         action: 'search',
-        props: { placeholder: 'Rechercher...', modelValue: searchQuery.value, overflowSideShow: true },
+        props: {
+          placeholder: 'Rechercher...',
+          modelValue: searchQuery.value,
+          overflowSideShow: true,
+        },
       },
       {
         id: 'cart',

@@ -105,7 +105,9 @@
       return 1;
     }
     if (typeof a[props.sortProp] === 'string' && typeof b[props.sortProp] === 'string') {
-      return a[props.sortProp].localeCompare(b[props.sortProp], i18n.global.locale, { numeric: true });
+      return a[props.sortProp].localeCompare(b[props.sortProp], i18n.global.locale, {
+        numeric: true,
+      });
     }
     if (a[props.sortProp] === b[props.sortProp]) {
       return 0;
