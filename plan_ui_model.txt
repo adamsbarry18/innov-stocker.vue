@@ -1,0 +1,249 @@
+Stack Frontend : Vue.js 3 + SCSS, TypeScript, Pinia, Composants réutilisables.
+Principes UI/UX Clés :
+Design Épuré et Moderne : Palette de couleurs cohérente, typographie lisible, espacement généreux, iconographie claire.
+Responsive Design : Adaptation fluide à toutes les tailles d'écran (mobile, tablette, bureau). Approche "Mobile-First" pour certains flux si pertinent, sinon "Desktop-First" avec dégradation gracieuse.
+Ergonomie Intuitive : Navigation claire, formulaires bien structurés, feedback utilisateur immédiat, réduction des clics inutiles.
+Performance : Chargement rapide des pages, interactions fluides, virtual scrolling pour les longues listes, lazy loading des composants/images.
+Composants Réutilisables : Maximiser la réutilisation pour la cohérence et l'efficacité du développement.
+Accessibilité (a11y) : Prise en compte des standards d'accessibilité (navigation clavier, ARIA attributes, contrastes).
+Création "à la volée" : Permettre aux utilisateurs d'ajouter des entités liées (ex: catégorie, fournisseur) directement depuis le formulaire de création de l'entité principale, via un modal simple, sans perdre le contexte.
+
+Liste des Vues et Composants par Module
+0. Tableau de Bord (Dashboard)
+View : DashboardView.vue
+Affichage des KPIs clés (graphiques, chiffres).
+Raccourcis vers les actions fréquentes.
+Potentiellement personnalisable.
+Composants : KpiCard.vue, SalesChart.vue, StockAlertsWidget.vue, RecentActivityWidget.vue.
+Endpoints : GET /api/v1/dashboard/summary, GET /api/v1/products?minStockAlert=true, GET /api/v1/activity-logs?limit=5
+I. Paramétrage de l'Entreprise et Configuration Globale
+View : SettingsLayoutView.vue (Layout avec sous-navigation pour les différentes sections de paramètres)
+CompanySettingsView.vue
+Formulaire pour éditer les informations de l'entreprise.
+Affichage du logo actuel, possibilité de le changer.
+Composants : CompanyForm.vue, AddressInputGroup.vue (réutilisable pour les adresses).
+Endpoints : GET /api/v1/company, PUT /api/v1/company
+CurrencySettingsView.vue
+Liste des devises, actions CRUD, définition de la devise par défaut.
+Composants : BaseTable.vue, CurrencyFormModal.vue.
+Endpoints : GET /api/v1/currencies, POST /api/v1/currencies, PUT /api/v1/currencies/{id}, DELETE /api/v1/currencies/{id}, PATCH /api/v1/currencies/{id}/set-default.
+PaymentMethodSettingsView.vue
+Liste des méthodes de paiement, actions CRUD.
+Composants : BaseTable.vue, PaymentMethodFormModal.vue.
+Endpoints : GET /api/v1/payment-methods, POST /api/v1/payment-methods, PUT /api/v1/payment-methods/{id}, DELETE /api/v1/payment-methods/{id}.
+BankAccountSettingsView.vue
+Liste des comptes bancaires, actions CRUD.
+Composants : BaseTable.vue, BankAccountFormModal.vue.
+Endpoints : GET /api/v1/bank-accounts, POST /api/v1/bank-accounts, PUT /api/v1/bank-accounts/{id}, DELETE /api/v1/bank-accounts/{id}.
+CashRegisterSettingsView.vue
+Liste des caisses physiques, actions CRUD.
+Composants : BaseTable.vue, CashRegisterFormModal.vue.
+Endpoints : GET /api/v1/cash-registers, POST /api/v1/cash-registers, PUT /api/v1/cash-registers/{id}, DELETE /api/v1/cash-registers/{id}.
+II. Gestion des Entités de Base (Clients, Fournisseurs, Lieux)
+Product Categories (Catégories de Produits)
+View : ProductCategoriesView.vue
+Affichage hiérarchique (arbre ou liste indentée) des catégories.
+Actions CRUD pour les catégories.
+Composants : CategoryTree.vue ou BaseTable.vue (avec gestion de la hiérarchie), CategoryFormModal.vue.
+Endpoints : GET /api/v1/product-categories?tree=true, POST /api/v1/product-categories, PUT /api/v1/product-categories/{id}, DELETE /api/v1/product-categories/{id}.
+Customer Groups (Groupes de Clients)
+View : CustomerGroupsView.vue
+Liste des groupes de clients, actions CRUD.
+Composants : BaseTable.vue, CustomerGroupFormModal.vue.
+Endpoints : GET /api/v1/customer-groups, POST /api/v1/customer-groups, PUT /api/v1/customer-groups/{id}, DELETE /api/v1/customer-groups/{id}.
+Suppliers (Fournisseurs)
+View : SupplierListView.vue
+Tableau des fournisseurs avec recherche, filtres, pagination.
+Bouton "Ajouter un fournisseur".
+Composants : BaseTable.vue, SupplierFilterBar.vue.
+Endpoints : GET /api/v1/suppliers.
+View : SupplierDetailView.vue (ou SupplierFormView.vue pour création/édition)
+Formulaire de création/édition d'un fournisseur.
+Détails du fournisseur, historique des commandes, factures.
+Composants : SupplierForm.vue, AddressInputGroup.vue, DocumentList.vue (pour contrats associés), RelatedOrdersTable.vue.
+Endpoints : GET /api/v1/suppliers/{id}, POST /api/v1/suppliers, PUT /api/v1/suppliers/{id}, DELETE /api/v1/suppliers/{id}, GET /api/v1/suppliers/{id}/purchase-orders, GET /api/v1/suppliers/{id}/invoices.
+UX "à la volée" : Dans SupplierForm.vue, si un champ default_currency_id pointe vers currencies, prévoir un bouton "+" pour ouvrir CurrencyFormModal.vue.
+Customers (Clients)
+View : CustomerListView.vue
+Tableau des clients avec recherche, filtres, pagination.
+Bouton "Ajouter un client".
+Composants : BaseTable.vue, CustomerFilterBar.vue.
+Endpoints : GET /api/v1/customers.
+View : CustomerDetailView.vue (ou CustomerFormView.vue)
+Formulaire de création/édition d'un client.
+Gestion des adresses de facturation et de livraison (multiples).
+Détails du client, historique des devis, commandes, factures.
+Composants : CustomerForm.vue, AddressInputGroup.vue (pour facturation), ShippingAddressManager.vue (liste modifiable d'adresses de livraison utilisant AddressInputGroup.vue et BaseModal.vue), RelatedQuotesTable.vue, RelatedOrdersTable.vue.
+Endpoints : GET /api/v1/customers/{id}, POST /api/v1/customers, PUT /api/v1/customers/{id}, DELETE /api/v1/customers/{id}, GET /api/v1/customers/{id}/shipping-addresses, POST /api/v1/customers/{id}/shipping-addresses, etc. GET /api/v1/customers/{id}/sales-orders, etc.
+UX "à la volée" : Dans CustomerForm.vue pour customer_group_id (vers CustomerGroupFormModal.vue), default_currency_id (vers CurrencyFormModal.vue).
+Warehouses (Entrepôts)
+View : WarehouseListView.vue
+Liste des entrepôts, actions CRUD.
+Composants : BaseTable.vue, WarehouseFormModal.vue (incluant AddressInputGroup.vue).
+Endpoints : GET /api/v1/warehouses, POST /api/v1/warehouses, PUT /api/v1/warehouses/{id}, DELETE /api/v1/warehouses/{id}.
+Shops (Boutiques)
+View : ShopListView.vue
+Liste des boutiques, actions CRUD.
+Composants : BaseTable.vue, ShopFormModal.vue (incluant AddressInputGroup.vue).
+Endpoints : GET /api/v1/shops, POST /api/v1/shops, PUT /api/v1/shops/{id}, DELETE /api/v1/shops/{id}.
+III. Gestion des Produits
+View : ProductListView.vue
+Tableau des produits avec recherche, filtres (catégorie, statut, stock bas), pagination.
+Vue grille/liste. Bouton "Ajouter un produit".
+Composants : BaseTable.vue (ou ProductCard.vue pour la vue grille), ProductFilterBar.vue.
+Endpoints : GET /api/v1/products.
+View : ProductFormView.vue (Création/Édition Produit)
+Formulaire multi-sections : informations générales, prix, stock, images, variantes, fournisseurs, composition (pour kits).
+Composants :
+ProductGeneralInfoForm.vue (nom, SKU, description avec RichTextEditor.vue, catégorie avec BaseSelect.vue et bouton "+" pour CategoryFormModal.vue, unité, dimensions, statut, code-barres/QR avec QrBarcodeDisplay.vue).
+ProductPricingForm.vue (prix d'achat, vente, TVA).
+ProductStockInfoForm.vue (seuils min/max, emplacements).
+ProductImagesManager.vue (upload multiple, prévisualisation, sélection image principale, utilisant BaseFileUpload.vue).
+ProductVariantsManager.vue (liste des variantes, modal pour ProductVariantForm.vue).
+ProductSuppliersManager.vue (liste des fournisseurs du produit, modal pour ProductSupplierForm.vue, sélection de fournisseur existant avec "+" pour SupplierFormModal.vue).
+ProductCompositionManager.vue (pour produits composites, sélection d'autres produits/variantes comme composants).
+Endpoints : GET /api/v1/products/{id} (pour édition), POST /api/v1/products, PUT /api/v1/products/{id}, DELETE /api/v1/products/{id}. Endpoints pour sous-ressources (images, variantes, etc.). GET /api/v1/product-categories, GET /api/v1/suppliers.
+View : ProductDetailView.vue
+Affichage détaillé des informations du produit.
+Niveaux de stock par entrepôt/boutique.
+Historique des mouvements de stock.
+Composants : ProductInfoDisplay.vue, ProductStockByLocationTable.vue, StockMovementHistoryTable.vue.
+Endpoints : GET /api/v1/products/{id}, GET /api/v1/products/{id}/stock-movements, GET /api/v1/products/{id}/current-stock.
+IV. Gestion des Achats
+Purchase Orders (Commandes d'Achat)
+View : PurchaseOrderListView.vue
+Tableau des commandes d'achat, filtres (statut, fournisseur, date), recherche, pagination.
+Bouton "Créer une commande d'achat".
+Composants : BaseTable.vue, PurchaseOrderFilterBar.vue.
+Endpoints : GET /api/v1/purchase-orders.
+View : PurchaseOrderFormView.vue (Création/Édition)
+Sélection du fournisseur (avec "+" pour SupplierFormModal.vue).
+Ajout/modification des lignes de produits (sélection de produit avec recherche et affichage stock actuel, saisie qté, prix).
+Calcul des totaux. Adresses de livraison.
+Composants : PurchaseOrderHeaderForm.vue, OrderItemTableEditable.vue (avec ProductSelector.vue), TotalsSummary.vue.
+Endpoints : POST /api/v1/purchase-orders, PUT /api/v1/purchase-orders/{id}, GET /api/v1/suppliers, GET /api/v1/products (pour sélection).
+View : PurchaseOrderDetailView.vue
+Détail de la commande, statuts, actions (approuver, envoyer, annuler).
+Liens vers réceptions, factures.
+Affichage du PDF.
+Composants : DocumentDetailDisplay.vue, OrderItemTable.vue, ActionButtonsGroup.vue, PdfPreviewer.vue.
+Endpoints : GET /api/v1/purchase-orders/{id}, PATCH /api/v1/purchase-orders/{id}/approve, etc. GET /api/v1/purchase-orders/{id}/document.
+Purchase Receptions (Réceptions d'Achats)
+View : PurchaseReceptionListView.vue
+Tableau des réceptions.
+Bouton "Nouvelle Réception".
+Endpoints : GET /api/v1/purchase-receptions.
+View : PurchaseReceptionFormView.vue
+Permet de créer une réception, soit à partir d'une commande d'achat (pré-remplissage), soit "aveugle".
+Saisie des quantités reçues, lots, dates d'expiration.
+Composants : ReceptionSourceSelector.vue (PO ou manuel), ReceptionItemTableEditable.vue.
+Endpoints : POST /api/v1/purchase-receptions, GET /api/v1/purchase-orders?status=approved|partially_received (pour sélection).
+View : PurchaseReceptionDetailView.vue
+Détails de la réception, PDF.
+Endpoints : GET /api/v1/purchase-receptions/{id}, GET /api/v1/purchase-receptions/{id}/document.
+Supplier Invoices (Factures Fournisseurs)
+View : SupplierInvoiceListView.vue
+Tableau des factures fournisseurs, filtres (statut, échéance).
+Bouton "Enregistrer une facture fournisseur".
+Endpoints : GET /api/v1/supplier-invoices.
+View : SupplierInvoiceFormView.vue
+Formulaire pour enregistrer une facture, lier aux POs/réceptions, uploader le scan.
+Composants : SupplierInvoiceForm.vue, LinkToPurchaseDocument.vue, BaseFileUpload.vue.
+Endpoints : POST /api/v1/supplier-invoices, PUT /api/v1/supplier-invoices/{id}.
+View : SupplierInvoiceDetailView.vue
+Détails, PDF (si uploadé), enregistrement des paiements.
+Composants : PaymentRegistrationModal.vue.
+Endpoints : GET /api/v1/supplier-invoices/{id}, POST /api/v1/supplier-invoices/{id}/payments (ou via l'endpoint global /payments).
+Supplier Returns (Retours Fournisseurs)
+Même structure que les autres documents d'achat (ListView, FormView, DetailView).
+Endpoints : CRUD sur /api/v1/supplier-returns, actions PATCH pour statuts, GET pour document PDF.
+V. Gestion des Ventes
+(Structure similaire à la gestion des achats : ListView, FormView, DetailView pour Devis, Commandes Clients, Livraisons, Factures Clients, Retours Clients)
+Quotes (Devis)
+View : QuoteListView.vue, QuoteFormView.vue, QuoteDetailView.vue
+UX "à la volée" dans QuoteFormView.vue : Pour customer_id (vers CustomerFormModal.vue), pour les produits dans les lignes (avec ProductSelector.vue qui pourrait permettre un ajout rapide de produit via ProductFormModal.vue si absolument nécessaire, bien que moins courant ici).
+Endpoints : CRUD sur /api/v1/quotes, actions PATCH pour statuts (envoyer, accepter, refuser), POST /convert-to-order, GET pour document PDF.
+Sales Orders (Commandes Clients)
+View : SalesOrderListView.vue, SalesOrderFormView.vue, SalesOrderDetailView.vue
+Vérification de la disponibilité du stock lors de l'ajout de produits.
+Endpoints : CRUD sur /api/v1/sales-orders, actions PATCH pour statuts.
+Deliveries (Livraisons)
+View : DeliveryListView.vue, DeliveryFormView.vue (création à partir de commandes en attente d'expédition), DeliveryDetailView.vue
+Endpoints : CRUD sur /api/v1/deliveries, actions PATCH pour statuts (expédier, livrer).
+Customer Invoices (Factures Clients)
+View : CustomerInvoiceListView.vue, CustomerInvoiceFormView.vue (création à partir de commandes/livraisons), CustomerInvoiceDetailView.vue
+Endpoints : CRUD sur /api/v1/customer-invoices, actions PATCH pour statuts (envoyer, annuler), POST /send-reminder.
+Customer Returns (Retours Clients)
+View : CustomerReturnListView.vue, CustomerReturnFormView.vue, CustomerReturnDetailView.vue
+Endpoints : CRUD sur /api/v1/customer-returns, actions PATCH pour statuts.
+VI. Gestion des Stocks
+Inventory Sessions (Sessions d'Inventaire)
+View : InventorySessionListView.vue
+Tableau des sessions, filtres, bouton "Démarrer un inventaire".
+Endpoints : GET /api/v1/inventory-sessions.
+View : InventorySessionFormView.vue (ou InventorySessionTakingView.vue)
+Sélection de l'entrepôt/boutique.
+Liste des produits (potentiellement filtrable) avec champs pour quantité comptée.
+Possibilité de scanner les produits pour incrémenter/saisir.
+Sauvegarde progressive.
+Composants : InventoryItemList.vue, ProductScanInput.vue.
+Endpoints : POST /api/v1/inventory-sessions, GET /api/v1/inventory-sessions/{id}, POST /api/v1/inventory-sessions/{id}/items.
+View : InventorySessionDetailView.vue
+Résumé de la session, écarts, bouton pour "Compléter et Valider".
+Rapport d'inventaire.
+Endpoints : GET /api/v1/inventory-sessions/{id}, POST /api/v1/inventory-sessions/{id}/complete, GET /api/v1/inventory-sessions/{id}/report.
+Stock Transfers (Transferts de Stock)
+View : StockTransferListView.vue, StockTransferFormView.vue, StockTransferDetailView.vue
+Logique pour sélection des sites source/destination, ajout produits, gestion des statuts (expédié, reçu).
+Endpoints : CRUD sur /api/v1/stock-transfers, actions PATCH pour statuts (ship, receive), GET pour document PDF.
+Stock Movements (Consultation)
+View : StockMovementListView.vue
+Tableau de tous les mouvements de stock avec filtres avancés (produit, type, date, lieu, utilisateur).
+Pas de création directe ici (généralement).
+Endpoints : GET /api/v1/stock-movements.
+VII. Gestion Financière (Caisses et Paiements)
+Cash Register Sessions (Sessions de Caisse)
+View : CashRegisterSessionListView.vue (pour admin/manager)
+Liste des sessions de caisse (ouvertes, fermées), par caisse.
+Endpoints : GET /api/v1/cash-register-sessions.
+View : ActiveCashRegisterView.vue (pour l'opérateur de caisse)
+Si une session est ouverte : affichage du solde, actions pour enregistrer ventes rapides (POS simplifié si prévu), dépenses.
+Bouton pour ouvrir/fermer la session.
+Composants : OpenCloseSessionModal.vue, CashTransactionFormModal.vue.
+Endpoints : GET /api/v1/cash-registers/{id}/sessions?status=open (pour la caisse assignée), POST /api/v1/cash-registers/{id}/sessions/open, PATCH /api/v1/cash-register-sessions/{id}/close, POST /api/v1/cash-register-sessions/{id}/transactions.
+View : CashRegisterSessionDetailView.vue
+Détails d'une session fermée, rapport.
+Endpoints : GET /api/v1/cash-register-sessions/{id}, GET /api/v1/cash-register-sessions/{id}/report.
+Payments (Paiements)
+View : PaymentListView.vue
+Liste de tous les paiements (entrants/sortants) avec filtres.
+Bouton "Enregistrer un paiement" (manuel/divers).
+Composants : BaseTable.vue, PaymentFormModal.vue (pour paiements non liés à une facture spécifique).
+Endpoints : GET /api/v1/payments, POST /api/v1/payments.
+Note : L'enregistrement de paiements liés à des factures se fait souvent depuis la vue détail de la facture concernée.
+VIII. Fonctionnalités Transverses (Vues)
+Notifications
+Un composant dans AppHeader.vue (NotificationDropdown.vue) listant les notifications récentes.
+View : NotificationFullListView.vue (si une page dédiée est nécessaire)
+Toutes les notifications avec pagination.
+Endpoints : GET /api/v1/notifications.
+Activity Logs
+View : ActivityLogView.vue
+Tableau des logs d'activité avec filtres (utilisateur, date, type d'action).
+Composants : BaseTable.vue, ActivityLogFilterBar.vue.
+Endpoints : GET /api/v1/activity-logs.
+Global Search Results
+View : GlobalSearchResultsView.vue
+Affiche les résultats de la recherche globale initiée depuis AppHeader.vue.
+Regroupement par type d'entité.
+Composants : SearchResultItem.vue.
+Endpoints : GET /api/v1/search (appelée via le store Pinia après saisie dans le header).
+Data Import/Export
+View : DataManagementView.vue
+Section pour l'import (produits, clients, fournisseurs) avec upload de fichier et mapping de colonnes (simplifié).
+Section pour l'export de données/rapports.
+Composants : DataImportSection.vue (avec BaseFileUpload.vue), DataExportSection.vue.
+Endpoints : POST /api/v1/import/..., GET /api/v1/export/....
+
+
+
